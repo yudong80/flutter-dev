@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'colors.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -25,21 +26,25 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
         SizedBox(height: 120.0),
-        TextField(
-          decoration: InputDecoration(
-            filled: true,
-            labelText: 'Username',
+        AccentColorOverride(
+          color: kShrineBrown900,
+          child: TextField(
+            decoration: InputDecoration(
+              labelText: 'Username',
+            ),
+            controller: _usernameController,
           ),
-          controller: _usernameController,
         ),
         SizedBox(height: 12.0),
-        TextField(
-          decoration: InputDecoration(
-            filled: true,
-            labelText: 'Password',
+        AccentColorOverride(
+          color: kShrineBrown900,
+          child: TextField(
+            decoration: InputDecoration(
+              labelText: 'Password',
+            ),
+            obscureText: true,
+            controller: _passwordController,
           ),
-          obscureText: true,
-          controller: _passwordController,
         ),
         ButtonBar(
           children: <Widget>[
@@ -52,6 +57,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             RaisedButton(
               child: Text('NEXT'),
+              elevation: 8.0,
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -60,5 +66,24 @@ class _LoginPageState extends State<LoginPage> {
         )
       ],
     )));
+  }
+}
+
+class AccentColorOverride extends StatelessWidget {
+  const AccentColorOverride({Key key, this.color, this.child})
+      : super(key: key);
+
+  final Color color;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Theme(
+      child: child,
+      data: Theme.of(context).copyWith(
+        accentColor: color,
+        brightness: Brightness.dark,
+      ),
+    );
   }
 }
